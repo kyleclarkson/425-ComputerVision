@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="" />
+    <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/0a_cat.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/0b_dog.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/1a_bicycle.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/1b_motorcycle.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/2a_einstein.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/2b_marilyn.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/3a_fish.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/3b_submarine.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/4a_bird.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment1/4b_plane.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/main.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,10 +29,19 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1Qij7m0q7ytpQ12e4TEEkakqlrQ" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/Q-Learning-Sentdex" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assignment1" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Kyle\Documents\GitHub\425-ComputerVision\assignment1" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -67,5 +90,16 @@
       <updated>1568260145446</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

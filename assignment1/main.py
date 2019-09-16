@@ -4,6 +4,7 @@ import math
 from scipy import signal
 
 from scipy import misc
+import matplotlib.pyplot as plt
 
 
 def boxfilter(n):
@@ -60,7 +61,6 @@ def gaussconvolve2d(array, sigma):
     f = gauss2d(sigma)
     return signal.convolve2d(array, f, mode="same")
 
-
 if __name__ == '__main__':
     # print(boxfilter(3))
     '''
@@ -81,6 +81,8 @@ if __name__ == '__main__':
         print(np.sum(f))
     '''
 
+    '''
+    # == Q 1.4 ==
     # TODO 4a question; format; 5
     dog = Image.open("dog.jpg")
     dog.show()
@@ -92,6 +94,38 @@ if __name__ == '__main__':
     result_img = Image.fromarray(result)
 
     result_img.save("dog_result.jpg")
+    '''
+
+    # == Q 2.1 ==
+    # The low-freq and high-freq images respectively
+    img1 = Image.open("0b_dog.bmp")
+    img2 = Image.open("0a_cat.bmp")
+
+    sigma = 1
+
+    # Get color channels from first image.
+    r, g, b = np.asarray(img1, dtype="uint8").T
+    con_r = gaussconvolve2d(r, sigma)
+    con_g = gaussconvolve2d(g, sigma)
+    con_b = gaussconvolve2d(b, sigma)
+
+    # Merge channels into output image
+    img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
+
+    # Get color channels from second image.
+    r, g, b = np.asarray(img2, dtype="uint8").T
+    con_r = gaussconvolve2d(r, sigma)
+    con_g = gaussconvolve2d(g, sigma)
+    con_b = gaussconvolve2d(b, sigma)
+
+    # Merge channels into output image
+    img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
+    # Compute high freq operation.
+    img2_high_freq = img2 - img2_low_freq
+
+    plt.imshow(img2_low_freq)
+    plt.show()
+
 
 
 
