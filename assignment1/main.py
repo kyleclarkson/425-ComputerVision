@@ -81,22 +81,31 @@ if __name__ == '__main__':
         print(np.sum(f))
     '''
 
-    '''
+
     # == Q 1.4 ==
     # TODO 4a question; format; 5
+
     dog = Image.open("dog.jpg")
     dog.show()
 
-    image_array = np.asarray(dog.convert("L"))
+    # Convert to numpy array with floating values, scale to [0,1] interval
+    image_array = np.asarray(dog.convert("L"), dtype='f')
+    print(image_array.shape)
+    print(f"Max: {np.max(image_array)}, arg: {np.unravel_index(image_array.argmax(), image_array.shape)}")
+    image_array /= 255.0
+    print(f"Scale Max: {np.max(image_array)}, arg: {np.unravel_index(image_array.argmax(), image_array.shape)}")
 
-    result = gaussconvolve2d(image_array, 1)
+    print(f"Data type: {image_array.dtype}")
+
+    result = gaussconvolve2d(image_array, sigma=3)
+
     result = result.astype("uint8")
     result_img = Image.fromarray(result)
 
     result_img.save("dog_result.jpg")
-    '''
 
-    # == Q 2.1 ==
+    # == Q 2 ==
+    '''
     # The low-freq and high-freq images respectively
     img1 = Image.open("0b_dog.bmp")
     img2 = Image.open("0a_cat.bmp")
@@ -118,7 +127,7 @@ if __name__ == '__main__':
     # Merge channels into output image
     img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
 
-    plt.subplot(3,2,3)
+    plt.subplot(3, 2, 3)
     plt.imshow(img1_low_freq)
 
     # Get color channels from second image.
@@ -139,6 +148,7 @@ if __name__ == '__main__':
     plt.imshow(img1_low_freq + img2_high_freq)
 
     plt.show()
+    '''
 
 
 
