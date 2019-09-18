@@ -101,7 +101,13 @@ if __name__ == '__main__':
     img1 = Image.open("0b_dog.bmp")
     img2 = Image.open("0a_cat.bmp")
 
-    sigma = 1
+    plt.subplot(3, 2, 1)
+    plt.imshow(img1)
+
+    plt.subplot(3, 2, 2)
+    plt.imshow(img2)
+
+    sigma = 10
 
     # Get color channels from first image.
     r, g, b = np.asarray(img1, dtype="uint8").T
@@ -111,6 +117,9 @@ if __name__ == '__main__':
 
     # Merge channels into output image
     img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
+
+    plt.subplot(3,2,3)
+    plt.imshow(img1_low_freq)
 
     # Get color channels from second image.
     r, g, b = np.asarray(img2, dtype="uint8").T
@@ -123,7 +132,12 @@ if __name__ == '__main__':
     # Compute high freq operation.
     img2_high_freq = img2 - img2_low_freq
 
-    plt.imshow(img2_low_freq)
+    plt.subplot(3,2, 4)
+    plt.imshow(img2_high_freq+128)
+
+    plt.subplot(3, 2, 5)
+    plt.imshow(img1_low_freq + img2_high_freq)
+
     plt.show()
 
 
