@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/0a_cat.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/0b_dog.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/1a_bicycle.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/1b_motorcycle.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/2a_einstein.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/2b_marilyn.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/3a_fish.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/3b_submarine.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/4a_bird.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/4b_plane.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/425-assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/425-assignments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment1/dog_result.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/dog_result.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,7 +27,8 @@
   <component name="ProjectId" id="1Qij7m0q7ytpQ12e4TEEkakqlrQ" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assignment1" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -68,6 +61,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/assignment1/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -88,18 +82,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1568260145446</updated>
+      <workItem from="1568842690868" duration="4247000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/425_ComputerVision$main.coverage" NAME="main Coverage Results" MODIFIED="1568846571979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/assignment1" />
   </component>
 </project>
