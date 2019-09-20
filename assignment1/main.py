@@ -136,7 +136,7 @@ if __name__ == '__main__':
     plt.subplot(3, 2, 2)
     plt.imshow(img2)
 
-    sigma = 4
+    sigma = 15
 
     # Get color channels from first image as floats, scale to [0,1].
     r, g, b = np.asarray(img1, dtype="f").T/255.0
@@ -169,7 +169,10 @@ if __name__ == '__main__':
     plt.subplot(3, 2, 4)
     plt.imshow(img2_high_freq+128)
 
-    # TODO add per channel - happening before?
+    # TODO 4th image display - some values are negative
+    '''
+        Adding values; some are still negative - likely wrapping around. 
+    '''
 
 
     # img1_low_freq[0] = np.clip(img1_low_freq[0], 0, 255)
