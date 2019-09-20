@@ -61,48 +61,58 @@ def gaussconvolve2d(array, sigma):
     f = gauss2d(sigma)
     return signal.convolve2d(array, f, mode="same")
 
+
 if __name__ == '__main__':
-    # print(boxfilter(3))
+
+    print("\n\n\n\n")
+
+    # == Q 1.1
     '''
+    sigma = 5
+    print(f"Sigma = {sigma}")
+    print(boxfilter(sigma))
+    '''
+
     # ==  Q 1.2 ==
+    '''
     for sigma in [0.3, 0.5, 1, 2]:
         f = gauss1d(sigma)
         print("Sigma: ", sigma)
         print(f)
-        print(np.sum(f))
+        print("\n\n")
     '''
 
-    '''
     # == Q 1.3 ==
+    '''
     for sigma in [0.5, 1]:
         f = gauss2d(sigma)
         print(f"Sigma: {sigma}")
+        print(f"Filter shape: {f.shape}")
         print(f)
-        print(np.sum(f))
+        print("\n\n")
     '''
 
-
     # == Q 1.4 ==
-    # TODO 4a question; format; 5
+
+    # TODO Written question
 
     dog = Image.open("dog.jpg")
-    dog.show()
+    # dog.show()
 
     # Convert to numpy array with floating values, scale to [0,1] interval
     image_array = np.asarray(dog.convert("L"), dtype='f')
     print(image_array.shape)
     print(f"Max: {np.max(image_array)}, arg: {np.unravel_index(image_array.argmax(), image_array.shape)}")
     image_array /= 255.0
-    print(f"Scale Max: {np.max(image_array)}, arg: {np.unravel_index(image_array.argmax(), image_array.shape)}")
 
-    print(f"Data type: {image_array.dtype}")
-
+    # Convolve image with filter, scale to [0,255], convert to int..
     result = gaussconvolve2d(image_array, sigma=3)
-
+    result *= 255.0
     result = result.astype("uint8")
-    result_img = Image.fromarray(result)
 
+    result_img = Image.fromarray(result)
     result_img.save("dog_result.jpg")
+
 
     # == Q 2 ==
     '''
