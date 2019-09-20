@@ -64,13 +64,13 @@ def gaussconvolve2d(array, sigma):
 
 if __name__ == '__main__':
 
-    print("\n\n\n\n")
+    print("\n\n")
 
     # == Q 1.1
     '''
-    sigma = 5
-    print(f"Sigma = {sigma}")
-    print(boxfilter(sigma))
+    n = 4
+    print(f"n = {n}")
+    print(boxfilter(n))
     '''
 
     # ==  Q 1.2 ==
@@ -93,44 +93,38 @@ if __name__ == '__main__':
     '''
 
     # == Q 1.4 ==
-<<<<<<< HEAD
-
-    # TODO Written question
-
-    dog = Image.open("dog.jpg")
-    # dog.show()
-=======
     '''
-    # TODO 4a question; format; 5
     dog = Image.open("dog.jpg")
->>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
 
     # Convert to numpy array with floating values, scale to [0,1] interval
     image_array = np.asarray(dog.convert("L"), dtype='f')
     image_array /= 255.0
-<<<<<<< HEAD
 
     # Convolve image with filter, scale to [0,255], convert to int..
     result = gaussconvolve2d(image_array, sigma=3)
-=======
     
     # Apply filter to input image.
     result = gaussconvolve2d(image_array, sigma=3)
 
     # Scale to [0,255], convert to int8 array.
->>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
     result *= 255.0
     result = result.astype("uint8")
 
     result_img = Image.fromarray(result)
     result_img.save("dog_result.jpg")
-<<<<<<< HEAD
 
+    # Display both images using matplotlib.
+    plt.subplot(121)
+    plt.title("Original")
+    plt.imshow(dog)
 
-    # == Q 2 ==
-=======
->>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
+    plt.subplot(122)
+    plt.title("Filtered")
+    plt.imshow(result, cmap="gray")
+
+    plt.show()
     '''
+
     # == Q 2 ==
     # The low-freq and high-freq images respectively
     img1 = Image.open("0b_dog.bmp")
@@ -142,7 +136,7 @@ if __name__ == '__main__':
     plt.subplot(3, 2, 2)
     plt.imshow(img2)
 
-    sigma = 10
+    sigma = 4
 
     # Get color channels from first image as floats, scale to [0,1].
     r, g, b = np.asarray(img1, dtype="f").T/255.0
@@ -176,10 +170,19 @@ if __name__ == '__main__':
     plt.imshow(img2_high_freq+128)
 
     # TODO add per channel - happening before?
-    result = img1_low_freq + img2_high_freq
-    result[0] = np.clip(result[0], 0, 255)
-    result[1] = np.clip(result[1], 0, 255)
-    result[2] = np.clip(result[2], 0, 255)
+
+
+    # img1_low_freq[0] = np.clip(img1_low_freq[0], 0, 255)
+    # img1_low_freq[1] = np.clip(img1_low_freq[1], 0, 255)
+    # img1_low_freq[2] = np.clip(img1_low_freq[2], 0, 255)
+    # img2_high_freq[0] = np.clip(img2_high_freq[0], 0, 255)
+    # img2_high_freq[1] = np.clip(img2_high_freq[1], 0, 255)
+    # img2_high_freq[2] = np.clip(img2_high_freq[2], 0, 255)
+
+    result = img2_high_freq + img1_low_freq
+    # result[0] = np.clip(result[0], 0, 255)
+    # result[1] = np.clip(result[1], 0, 255)
+    # result[2] = np.clip(result[2], 0, 255)
     print(f"max: {np.max(result[0])}")
     print(f"max: {np.max(result[1])}")
     print(f"max: {np.max(result[2])}")
@@ -190,9 +193,3 @@ if __name__ == '__main__':
     plt.imshow(result)
 
     plt.show()
-
-
-
-
-
-
