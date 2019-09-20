@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/425-assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/425-assignments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment1/dog_result.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/dog_result.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/main.py" afterDir="false" />
@@ -25,6 +30,10 @@
   <component name="ProjectId" id="1Qij7m0q7ytpQ12e4TEEkakqlrQ" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+<<<<<<< HEAD
+=======
+    <property name="WebServerToolWindowFactoryState" value="false" />
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -58,6 +67,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/assignment1/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -78,8 +88,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1568260145446</updated>
+      <workItem from="1568842690868" duration="4247000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -93,5 +107,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/425_ComputerVision$main.coverage" NAME="main Coverage Results" MODIFIED="1568846571979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/assignment1" />
   </component>
 </project>

@@ -93,29 +93,45 @@ if __name__ == '__main__':
     '''
 
     # == Q 1.4 ==
+<<<<<<< HEAD
 
     # TODO Written question
 
     dog = Image.open("dog.jpg")
     # dog.show()
+=======
+    '''
+    # TODO 4a question; format; 5
+    dog = Image.open("dog.jpg")
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
 
     # Convert to numpy array with floating values, scale to [0,1] interval
     image_array = np.asarray(dog.convert("L"), dtype='f')
-    print(image_array.shape)
-    print(f"Max: {np.max(image_array)}, arg: {np.unravel_index(image_array.argmax(), image_array.shape)}")
     image_array /= 255.0
+<<<<<<< HEAD
 
     # Convolve image with filter, scale to [0,255], convert to int..
     result = gaussconvolve2d(image_array, sigma=3)
+=======
+    
+    # Apply filter to input image.
+    result = gaussconvolve2d(image_array, sigma=3)
+
+    # Scale to [0,255], convert to int8 array.
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
     result *= 255.0
     result = result.astype("uint8")
 
     result_img = Image.fromarray(result)
     result_img.save("dog_result.jpg")
+<<<<<<< HEAD
 
 
     # == Q 2 ==
+=======
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
     '''
+    # == Q 2 ==
     # The low-freq and high-freq images respectively
     img1 = Image.open("0b_dog.bmp")
     img2 = Image.open("0a_cat.bmp")
@@ -128,37 +144,52 @@ if __name__ == '__main__':
 
     sigma = 10
 
-    # Get color channels from first image.
-    r, g, b = np.asarray(img1, dtype="uint8").T
-    con_r = gaussconvolve2d(r, sigma)
-    con_g = gaussconvolve2d(g, sigma)
-    con_b = gaussconvolve2d(b, sigma)
+    # Get color channels from first image as floats, scale to [0,1].
+    r, g, b = np.asarray(img1, dtype="f").T/255.0
 
-    # Merge channels into output image
+    # Apply filter to each channel, scale result to [0,255].
+    con_r = gaussconvolve2d(r, sigma)*255.0
+    con_g = gaussconvolve2d(g, sigma)*255.0
+    con_b = gaussconvolve2d(b, sigma)*255.0
+
+    # Merge channels into output image, convert to int8 array.
     img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
 
     plt.subplot(3, 2, 3)
     plt.imshow(img1_low_freq)
 
-    # Get color channels from second image.
-    r, g, b = np.asarray(img2, dtype="uint8").T
-    con_r = gaussconvolve2d(r, sigma)
-    con_g = gaussconvolve2d(g, sigma)
-    con_b = gaussconvolve2d(b, sigma)
+    # Get color channels from second image as floats, scale to [0,1]
+    r, g, b = np.asarray(img2, dtype="uint8").T/255.0
 
-    # Merge channels into output image
+    # Apply filter to each channel, scale result to [0,255]
+    con_r = gaussconvolve2d(r, sigma)*255.0
+    con_g = gaussconvolve2d(g, sigma)*255.0
+    con_b = gaussconvolve2d(b, sigma)*255.0
+
+    # Merge channels into output image, con
     img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
     # Compute high freq operation.
     img2_high_freq = img2 - img2_low_freq
+    img2_high_freq = np.clip(img2_high_freq, 0, 255)
 
-    plt.subplot(3,2, 4)
+    plt.subplot(3, 2, 4)
     plt.imshow(img2_high_freq+128)
 
+    # TODO add per channel - happening before?
+    result = img1_low_freq + img2_high_freq
+    result[0] = np.clip(result[0], 0, 255)
+    result[1] = np.clip(result[1], 0, 255)
+    result[2] = np.clip(result[2], 0, 255)
+    print(f"max: {np.max(result[0])}")
+    print(f"max: {np.max(result[1])}")
+    print(f"max: {np.max(result[2])}")
+    print(f"min: {np.min(result[2])}")
+    print(f"min: {np.min(result[0])}")
+    print(f"min: {np.min(result[1])}")
     plt.subplot(3, 2, 5)
-    plt.imshow(img1_low_freq + img2_high_freq)
+    plt.imshow(result)
 
     plt.show()
-    '''
 
 
 
