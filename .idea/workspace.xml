@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/0a_cat.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/0b_dog.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/1a_bicycle.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/1b_motorcycle.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/2a_einstein.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/2b_marilyn.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/3a_fish.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/3b_submarine.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/4a_bird.bmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment1/4b_plane.bmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment1/dog_result.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/dog_result.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,7 +25,7 @@
   <component name="ProjectId" id="1Qij7m0q7ytpQ12e4TEEkakqlrQ" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assignment1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -96,7 +86,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
