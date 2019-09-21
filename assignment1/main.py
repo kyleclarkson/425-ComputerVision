@@ -136,7 +136,7 @@ if __name__ == '__main__':
     plt.subplot(3, 2, 2)
     plt.imshow(img2)
 
-    sigma = 15
+    sigma = 5
 
     # Get color channels from first image as floats, scale to [0,1].
     r, g, b = np.asarray(img1, dtype="f").T/255.0
@@ -147,13 +147,13 @@ if __name__ == '__main__':
     con_b = gaussconvolve2d(b, sigma)*255.0
 
     # Merge channels into output image, convert to int8 array.
-    img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
+    img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint")
 
     plt.subplot(3, 2, 3)
     plt.imshow(img1_low_freq)
 
     # Get color channels from second image as floats, scale to [0,1]
-    r, g, b = np.asarray(img2, dtype="uint8").T/255.0
+    r, g, b = np.asarray(img2, dtype="f").T/255.0
 
     # Apply filter to each channel, scale result to [0,255]
     con_r = gaussconvolve2d(r, sigma)*255.0
@@ -161,38 +161,29 @@ if __name__ == '__main__':
     con_b = gaussconvolve2d(b, sigma)*255.0
 
     # Merge channels into output image, con
-    img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint8")
+    img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint")
+
     # Compute high freq operation.
     img2_high_freq = img2 - img2_low_freq
-    img2_high_freq = np.clip(img2_high_freq, 0, 255)
+    # img2_high_freq = np.clip(img2_high_freq, 0, 255)
 
     plt.subplot(3, 2, 4)
-    plt.imshow(img2_high_freq+128)
+    plt.imshow(img2_high_freq + 128)
 
-    # TODO 4th image display - some values are negative
-    '''
-        Adding values; some are still negative - likely wrapping around. 
-    '''
-
-
-    # img1_low_freq[0] = np.clip(img1_low_freq[0], 0, 255)
-    # img1_low_freq[1] = np.clip(img1_low_freq[1], 0, 255)
-    # img1_low_freq[2] = np.clip(img1_low_freq[2], 0, 255)
-    # img2_high_freq[0] = np.clip(img2_high_freq[0], 0, 255)
-    # img2_high_freq[1] = np.clip(img2_high_freq[1], 0, 255)
-    # img2_high_freq[2] = np.clip(img2_high_freq[2], 0, 255)
-
+    # TODO Scale all images w/ clip. Create functions per question; test q2 with other images.
+    # Get each image's color channels sc apply subtraction
     result = img2_high_freq + img1_low_freq
-    # result[0] = np.clip(result[0], 0, 255)
-    # result[1] = np.clip(result[1], 0, 255)
-    # result[2] = np.clip(result[2], 0, 255)
-    print(f"max: {np.max(result[0])}")
-    print(f"max: {np.max(result[1])}")
-    print(f"max: {np.max(result[2])}")
-    print(f"min: {np.min(result[2])}")
-    print(f"min: {np.min(result[0])}")
-    print(f"min: {np.min(result[1])}")
+
+    # Clip color channels as integers between 0 and 255.
+    r, g, b = np.asarray(result, dtype="f").T/255.0
+    r = np.clip(r, 0, 1) * 255.0
+    g = np.clip(g, 0, 1) * 255.0
+    b = np.clip(b, 0, 1) * 255.0
+
+    result = np.stack((r.T, g.T, b.T), axis=2).astype("uint")
+
     plt.subplot(3, 2, 5)
     plt.imshow(result)
 
     plt.show()
+
