@@ -1,9 +1,15 @@
+"""
+    Comp. Vision 425 - Assignment 1
+    Name:               Kyle Clarkson
+    Student Number:     38152187
+"""
+
+
 from PIL import Image
 import numpy as np
 import math
 from scipy import signal
 
-from scipy import misc
 import matplotlib.pyplot as plt
 
 
@@ -60,7 +66,6 @@ def gaussconvolve2d(array, sigma):
     """
     f = gauss2d(sigma)
     return signal.convolve2d(array, f, mode="same")
-
 
 if __name__ == '__main__':
 
@@ -127,16 +132,17 @@ if __name__ == '__main__':
 
     # == Q 2 ==
     # The low-freq and high-freq images respectively
-    img1 = Image.open("0b_dog.bmp")
-    img2 = Image.open("0a_cat.bmp")
+    img1 = Image.open("4b_plane.bmp")
+    img2 = Image.open("4a_bird.bmp")
+    sigma = 10
 
     plt.subplot(3, 2, 1)
+    plt.title("Image 1")
     plt.imshow(img1)
 
     plt.subplot(3, 2, 2)
+    plt.title("Image 2")
     plt.imshow(img2)
-
-    sigma = 5
 
     # Get color channels from first image as floats, scale to [0,1].
     r, g, b = np.asarray(img1, dtype="f").T/255.0
@@ -147,10 +153,11 @@ if __name__ == '__main__':
     con_b = gaussconvolve2d(b, sigma)*255.0
 
     # Merge channels into output image, convert to int8 array.
-    img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint")
+    img1_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2)
 
     plt.subplot(3, 2, 3)
-    plt.imshow(img1_low_freq)
+    plt.title("Image 1 Low Freq.")
+    plt.imshow(img1_low_freq.astype("uint"))
 
     # Get color channels from second image as floats, scale to [0,1]
     r, g, b = np.asarray(img2, dtype="f").T/255.0
@@ -161,29 +168,30 @@ if __name__ == '__main__':
     con_b = gaussconvolve2d(b, sigma)*255.0
 
     # Merge channels into output image, con
-    img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2).astype("uint")
+    img2_low_freq = np.stack((con_r.T, con_g.T, con_b.T), axis=2)
 
     # Compute high freq operation.
     img2_high_freq = img2 - img2_low_freq
     # img2_high_freq = np.clip(img2_high_freq, 0, 255)
 
     plt.subplot(3, 2, 4)
-    plt.imshow(img2_high_freq + 128)
+    plt.title("Image 2 High Freq.")
+    plt.imshow(img2_high_freq.astype("uint") + 128)
 
-    # TODO Scale all images w/ clip. Create functions per question; test q2 with other images.
     # Get each image's color channels sc apply subtraction
-    result = img2_high_freq + img1_low_freq
+    hybrid = img2_high_freq + img1_low_freq
 
     # Clip color channels as integers between 0 and 255.
-    r, g, b = np.asarray(result, dtype="f").T/255.0
+    r, g, b = np.asarray(hybrid, dtype="f").T/255.0
     r = np.clip(r, 0, 1) * 255.0
     g = np.clip(g, 0, 1) * 255.0
     b = np.clip(b, 0, 1) * 255.0
 
-    result = np.stack((r.T, g.T, b.T), axis=2).astype("uint")
+    hybrid = np.stack((r.T, g.T, b.T), axis=2)
 
     plt.subplot(3, 2, 5)
-    plt.imshow(result)
+    plt.title("Hybrid Image")
+    plt.imshow(hybrid.astype("uint"))
 
     plt.show()
 
