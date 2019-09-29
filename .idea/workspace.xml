@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/family.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/fans.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/judybats.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/sports.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/students.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/template.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/tree.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assignment2/ncc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assignment2/faces/face_detection_template.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/425-assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/425-assignments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment2/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment2/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment2/ncc.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment2/ncc.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +28,8 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Airsim-Drone-Racing" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -134,6 +130,11 @@
       <updated>1568260145446</updated>
       <workItem from="1568842690868" duration="4247000" />
       <workItem from="1569191674947" duration="223000" />
+      <workItem from="1569205678216" duration="498000" />
+      <workItem from="1569206192104" duration="600000" />
+      <workItem from="1569429313098" duration="592000" />
+      <workItem from="1569685816744" duration="598000" />
+      <workItem from="1569796285934" duration="3585000" />
     </task>
     <servers />
   </component>

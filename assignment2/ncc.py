@@ -2,6 +2,9 @@ import numpy as np
 import math
 from scipy import signal
 
+def __init__():
+    pass
+
 def normxcorr2D(image, template):
     """
     Normalized cross-correlation for 2D PIL images
