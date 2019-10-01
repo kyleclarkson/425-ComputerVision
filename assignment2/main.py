@@ -29,12 +29,30 @@ def MakePyramid(image, minsize):
 
     return return_list
 
+
 def ShowPyramid(pyramid):
-    pass
+    '''
+    :param pyramid: The pyramid to be displayed
+    '''
+    # Determine width needed to display pyramid horizontally.
+    width = 0
+    for img in pyramid:
+        width += img.width + 1
+
+    # Create display image for pyramid
+    display_pyramid_img = Image.new("L", (width, fan.height), color=255)
+    x_offset = 0
+    for img in pyramid:
+        display_pyramid_img.paste(img, (x_offset, 0))
+        x_offset += img.width + 1
+
+    display_pyramid_img.show()
+
 
 if __name__ == "__main__":
-
     fan = Image.open("faces/fans.jpg")
+    # Get image pyramid
+    pyramid = MakePyramid(fan, 25)
 
-    pyramid = MakePyramid(fan, 50)
-    print(len(pyramid))
+    # Show pyramid
+    ShowPyramid(pyramid)

@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assignment2/faces/face_detection_template.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/425-assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/425-assignments.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment2/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment2/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment2/ncc.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment2/ncc.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -135,6 +132,7 @@
       <workItem from="1569429313098" duration="592000" />
       <workItem from="1569685816744" duration="598000" />
       <workItem from="1569796285934" duration="3585000" />
+      <workItem from="1569870965825" duration="1075000" />
     </task>
     <servers />
   </component>
