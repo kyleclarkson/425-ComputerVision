@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment2/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment2/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,6 +71,9 @@
       <module name="425-assignments" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/assignment2" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -134,6 +136,7 @@
       <workItem from="1569796285934" duration="3585000" />
       <workItem from="1569870965825" duration="1827000" />
       <workItem from="1570029618730" duration="7835000" />
+      <workItem from="1570142432766" duration="246000" />
     </task>
     <servers />
   </component>
