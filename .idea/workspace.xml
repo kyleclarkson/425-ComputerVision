@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fbbeee7-fb0a-446d-bdac-83042b0c41d8" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/assignment2/faces/family.jpg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/assignment2/faces/fans.jpg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/assignment2/faces/judybats.jpg" afterDir="false" />
@@ -11,6 +12,16 @@
       <change afterPath="$PROJECT_DIR$/assignment2/faces/tree.jpg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/assignment2/main.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/assignment2/ncc.py" afterDir="false" />
+=======
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/425-assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/425-assignments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment1/dog_result.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/dog_result.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignment1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignment1/main.py" afterDir="false" />
+>>>>>>> bc7a4b1b6aa62703997783f51a875b7502ae514b
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +42,10 @@
   <component name="ProjectId" id="1Qij7m0q7ytpQ12e4TEEkakqlrQ" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+<<<<<<< HEAD
+=======
     <property name="WebServerToolWindowFactoryState" value="false" />
+>>>>>>> 38c493f6a0c9cc9341dc3d3e16cba1fd94b85dee
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
