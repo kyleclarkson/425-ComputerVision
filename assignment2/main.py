@@ -24,7 +24,7 @@ def MakePyramid(image, minsize):
 
     while width >= minsize and height >= minsize:
         return_list.append(image)
-        image = image.resize((int(width*0.75), int(height*0.75)))
+        image = image.resize((int(width*0.75), int(height*0.75)), Image.BICUBIC)
         width, height = image.size
 
     return return_list
@@ -55,38 +55,51 @@ def FindTemplate(pyramid, template, threshold):
     # Matching templates will be drawn on this image.
     display_image = pyramid[0].convert("RGB")
 
-    # Get correlation matrix for image and template
-    corr_matrix = ncc.normxcorr2D(pyramid[0], template)
-
     # Dimensions of display image
     dsp_width, dsp_height = display_image.size
-    # Dimensions of template - used for drawing bounding boxes.
+
+    # Scale template to have specified width.
+    FIXED_WIDTH = 15
+    scale = float(FIXED_WIDTH / float(template.size[0]))
+    template = template.resize((FIXED_WIDTH, int((float(template.size[1]) * scale))), Image.BICUBIC)
     temp_width, temp_height = template.size
-    corr_found = 0
+    print(f"Template size: {template.size}")
 
-    print(f"img shape :{corr_matrix.shape}")
-    for i in range(corr_matrix.shape[0]):
-        for j in range(corr_matrix.shape[1]):
-            # Template matches - draw bounding box.
-            if corr_matrix[i, j] > threshold:
-                corr_found += 1
-                # Points of bounding box (Clipped to display image boundaries.
-                top_left = max(0, min(j - temp_width//2, dsp_width-1)), max(0, min(i - temp_height//2, dsp_height-1))
+    total_corr = 0
 
-                top_right = max(0, min(j - temp_width//2, dsp_width-1)), max(0, min(i + temp_height//2, dsp_height-1))
+    for idx, img in enumerate(pyramid):
+        # Get correlation matrix for image of pyramid
+        corr_matrix = ncc.normxcorr2D(img, template)
+        corr_found = 0
+        for i in range(corr_matrix.shape[0]):
+            for j in range(corr_matrix.shape[1]):
+                # Template matches - draw bounding box.
+                if corr_matrix[i, j] > threshold:
+                    corr_found += 1
+                    # Points of bounding box (Clipped to display image boundaries), scaled to each pyramid level.
+                    top_left = max(0, min(j - temp_width//2, dsp_width-1))*math.pow(1.333, idx),\
+                               max(0, min(i - temp_height//2, dsp_height-1))*math.pow(1.333, idx)
 
-                bottom_right = max(0, min(j + temp_width//2, dsp_width-1)), max(0, min(i + temp_height//2, dsp_height-1))
+                    top_right = max(0, min(j - temp_width//2, dsp_width-1))*math.pow(1.333, idx),\
+                                max(0, min(i + temp_height//2, dsp_height-1))*math.pow(1.333, idx)
 
-                bottom_left = max(0, min(j + temp_width//2, dsp_width-1)), max(0, min(i - temp_height//2, dsp_height-1))
+                    bottom_right = max(0, min(j + temp_width//2, dsp_width-1))*math.pow(1.333, idx),\
+                                   max(0, min(i + temp_height//2, dsp_height-1))*math.pow(1.333, idx)
 
-                draw = ImageDraw.Draw(display_image)
-                draw.line((top_left, top_right), fill="red", width=2)
-                draw.line((top_right, bottom_right), fill="red", width=2)
-                draw.line((bottom_right, bottom_left), fill="red", width=2)
-                draw.line((bottom_left, top_left), fill="red", width=2)
-                del draw
+                    bottom_left = max(0, min(j + temp_width//2, dsp_width-1))*math.pow(1.333, idx),\
+                                  max(0, min(i - temp_height//2, dsp_height-1))*math.pow(1.333, idx)
 
-    print(f"Correlations found: {corr_found}")
+                    draw = ImageDraw.Draw(display_image)
+                    draw.line((top_left, top_right), fill="red", width=2)
+                    draw.line((top_right, bottom_right), fill="red", width=2)
+                    draw.line((bottom_right, bottom_left), fill="red", width=2)
+                    draw.line((bottom_left, top_left), fill="red", width=2)
+                    del draw
+
+        print(f"Corr found at level {idx}: {corr_found}")
+        total_corr += corr_found
+
+    print(f"Correlations found: {total_corr}")
     display_image.show()
 
 if __name__ == "__main__":
@@ -98,5 +111,9 @@ if __name__ == "__main__":
     # ShowPyramid(pyramid)
 
     judybats = Image.open("faces/judybats.jpg")
-    template = Image.open("faces/template.jpg")
-    FindTemplate(MakePyramid(judybats, 50), template, .6)
+    template = Image.open("faces/face_detection_template.jpg")
+
+    pyramid = MakePyramid(judybats, 40)
+    # ShowPyramid(pyramid)
+    print("Pyramid size: ", len(pyramid))
+    FindTemplate(pyramid, template, .7)
