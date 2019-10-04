@@ -52,6 +52,12 @@ def ShowPyramid(pyramid):
 
 
 def FindTemplate(pyramid, template, threshold):
+    '''
+    :param pyramid: The image pyramid.
+    :param template: The template used for correlation.
+    :param threshold: Threshold value - correlation must exceed this amount for a correlation to be found.
+    :return: The display image with bounding boxes (for saving image purposes)
+    '''
     # Matching templates will be drawn on this image.
     display_image = pyramid[0].convert("RGB")
 
@@ -66,6 +72,7 @@ def FindTemplate(pyramid, template, threshold):
     print(f"Template size: {template.size}")
 
     total_corr = 0
+    isSavingOutput = True
 
     for idx, img in enumerate(pyramid):
         # Get correlation matrix for image of pyramid
@@ -101,8 +108,11 @@ def FindTemplate(pyramid, template, threshold):
 
     print(f"Correlations found: {total_corr}")
     display_image.show()
+    return display_image
 
 if __name__ == "__main__":
+
+    # === Q 1 ===
     # fan = Image.open("faces/fans.jpg")
     # # Get image pyramid
     # pyramid = MakePyramid(fan, 25)
@@ -110,10 +120,45 @@ if __name__ == "__main__":
     # # Show pyramid
     # ShowPyramid(pyramid)
 
+    # === Q5 ===
+    test_images = []
+    test_image_names = ["Judybats",
+                        "Students",
+                        "Tree",
+                        "Family",
+                        "Fans",
+                        "Sports"]
+
     judybats = Image.open("faces/judybats.jpg")
+    test_images.append(judybats)
+
+    students = Image.open("faces/students.jpg")
+    test_images.append(students)
+
+    tree = Image.open("faces/tree.jpg")
+    test_images.append(tree)
+
+    family = Image.open("faces/family.jpg")
+    test_images.append(family)
+
+    fans = Image.open("faces/fans.jpg")
+    test_images.append(fans)
+
+    sports = Image.open("faces/sports.jpg")
+    test_images.append(sports)
+
     template = Image.open("faces/face_detection_template.jpg")
 
-    pyramid = MakePyramid(judybats, 40)
-    # ShowPyramid(pyramid)
-    print("Pyramid size: ", len(pyramid))
-    FindTemplate(pyramid, template, .7)
+    # Parameters
+    MIN_SIZE = 25
+    THRESHOLD = 0.6
+    # For saving output images.
+    isSaving = False
+
+    for idx, image in enumerate(test_images):
+        print(f"Test image number: {idx+1}")
+        pyramid = MakePyramid(image, MIN_SIZE)
+        dsp_image = FindTemplate(pyramid, template, THRESHOLD)
+
+        if isSaving:
+            dsp_image.save(f"output/{test_image_names[idx]}-threshold-{THRESHOLD}-minsize-{MIN_SIZE}")
