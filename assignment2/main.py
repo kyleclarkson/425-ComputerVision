@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
     # Parameters
     MIN_SIZE = 25
-    THRESHOLD = 0.6
+    THRESHOLD = 0.575
     # For saving output images.
     isSaving = False
 
