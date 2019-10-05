@@ -151,9 +151,9 @@ if __name__ == "__main__":
 
     # Parameters
     MIN_SIZE = 25
-    THRESHOLD = 0.575
+    THRESHOLD = 0.6
     # For saving output images.
-    isSaving = False
+    isSaving = True
 
     for idx, image in enumerate(test_images):
         print(f"Test image number: {idx+1}")
@@ -161,4 +161,4 @@ if __name__ == "__main__":
         dsp_image = FindTemplate(pyramid, template, THRESHOLD)
 
         if isSaving:
-            dsp_image.save(f"output/{test_image_names[idx]}-threshold-{THRESHOLD}-minsize-{MIN_SIZE}")
+            dsp_image.save(f"output/{test_image_names[idx]}-threshold-{THRESHOLD}-minsize-{MIN_SIZE}.jpg")
