@@ -6,14 +6,13 @@ from assignment2 import ncc
 
 
 def MakePyramid(image, minsize):
-    '''
+    """
     :param image: PIL input image
     :param minsize: a positive value such that no down-sampled image in the pyramid
             has a dimension of smaller size.
     :return: An image pyramid as a list, starting with the input image
             and then consecutive downscaling.
-    '''
-
+    """
     assert isinstance(image, Image.Image), "Image must be Pillow image!"
     assert minsize > 0, "minsize must be positive!"
 
@@ -31,9 +30,9 @@ def MakePyramid(image, minsize):
 
 
 def ShowPyramid(pyramid):
-    '''
+    """
     :param pyramid: The pyramid to be displayed
-    '''
+    """
 
     height = pyramid[0].size[1]
     # Determine width needed to display pyramid horizontally.
@@ -52,12 +51,12 @@ def ShowPyramid(pyramid):
 
 
 def FindTemplate(pyramid, template, threshold):
-    '''
+    """
     :param pyramid: The image pyramid.
     :param template: The template used for correlation.
     :param threshold: Threshold value - correlation must exceed this amount for a correlation to be found.
     :return: The display image with bounding boxes (for saving image purposes)
-    '''
+    """
     # Matching templates will be drawn on this image.
     display_image = pyramid[0].convert("RGB")
 
@@ -72,7 +71,6 @@ def FindTemplate(pyramid, template, threshold):
     print(f"Template size: {template.size}")
 
     total_corr = 0
-    isSavingOutput = True
 
     for idx, img in enumerate(pyramid):
         # Get correlation matrix for image of pyramid
