@@ -41,6 +41,9 @@ def CopyPatch(imHole, TODOMask, textureIm, iPatchCenter, jPatchCenter, iMatchCen
 			#
 			# ADD YOUR CODE HERE
 			#
+			print("CopyPatch")
+			print(f"patch center ({iPatchCenter},{jPatchCenter}), match center: ({iMatchCenter},{jMatchCenter})")
+
 			# Check if pixel is blank in mask
 			if TODOMask[i,j] == 1:
 				pass
@@ -160,12 +163,12 @@ if showResults == True:
 	im1 = DrawBox(im1,jTextureMin,iTextureMin,jTextureMax,iTextureMax)
 	im1.show()
 	print ("Are you happy with this choice of fillRegion and textureIm?")
-	Yes_or_No = False
-	while not Yes_or_No:
-		answer = "" #raw_input("Yes or No: ")
-		if answer == "Yes" or answer == "No":
-			Yes_or_No = True
-	assert answer == "Yes", "You must be happy. Please try again."
+	# Yes_or_No = False
+	# while not Yes_or_No:
+	# 	answer = "" #raw_input("Yes or No: ")
+	# 	if answer == "Yes" or answer == "No":
+	# 		Yes_or_No = True
+	# assert answer == "Yes", "You must be happy. Please try again."
 
 #
 # Perform the hole filling
