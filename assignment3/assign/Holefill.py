@@ -104,11 +104,11 @@ def Find_Edge(hole_mask):
 #
 
 # Change patchL to change the patch size used (patch size is 2 *patchL + 1)
-patchL = 10
+patchL = 8
 patchSize = 2*patchL+1
 
 # Standard deviation for random patch selection
-randomPatchSD = 1
+randomPatchSD = 3
 
 # Display results interactively
 showResults = True
@@ -117,7 +117,7 @@ showResults = True
 # Read input image
 #
 
-im = Image.open('donkey.jpg').convert('RGB')
+im = Image.open('cow.jpg').convert('RGB')
 im_array = np.asarray(im, dtype=np.uint8)
 imRows, imCols, imBands = np.shape(im_array)
 

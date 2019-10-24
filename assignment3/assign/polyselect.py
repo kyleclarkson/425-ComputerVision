@@ -86,8 +86,8 @@ def handle_close(event):
 
 # === Script execution starts here ===
 # imname is the name of the image file that you want to read.
-imname = 'donkey.jpg'
-
+# imname = 'donkey.jpg'
+imname = 'cow.jpg'
 # === Read the image
 im = Image.open( imname ).convert('RGB')
 im_array = np.asarray( im, dtype=np.uint8 )
