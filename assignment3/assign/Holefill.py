@@ -13,7 +13,12 @@ def ComputeSSD(TODOPatch, TODOMask, textureIm, patchL):
 	tex_rows, tex_cols, tex_bands = np.shape(textureIm)
 	ssd_rows = tex_rows - 2 * patchL
 	ssd_cols = tex_cols - 2 * patchL
-	SSD = np.zeros((ssd_rows,ssd_cols))
+	SSD = np.zeros((ssd_rows, ssd_cols))
+
+	# Create a patch corresponding to the TODOMask with colour channels.
+	mask = np.zeros((TODOMask.shape[0], TODOMask.shape[1], 3))
+	todo_mask_patch = np.ma.array(TODOPatch, mask=mask, dtype=float)
+
 	for r in range(ssd_rows):
 		for c in range(ssd_cols):
 			# Compute sum square difference between textureIm and TODOPatch
@@ -21,18 +26,30 @@ def ComputeSSD(TODOPatch, TODOMask, textureIm, patchL):
 			#
 			# ADD YOUR CODE HERE
 			#
-			# Check if pixel value is included in SSD
-			if TODOMask[r][c] == 0:
-				# Iterate over each color channel
-				for channel in [0,1,2]:
-					patch_value = TODOPatch[r, c, channel] * 1.0
-					texture_value = textureIm[r, c, channel] * 1.0
-					SSD[r, c] += (patch_value - texture_value) ** 2
+
+			# Get patch for values of r,c from texture image.
+			texture_patch = textureIm[r:r+patch_rows, c:c+patch_cols]
+
+			# Compute SSD for each channel
+			for channel in [0, 1, 2]:
+				SSD[r, c] += np.sum((texture_patch - todo_mask_patch)**2)
 	return SSD
 
 
 def CopyPatch(imHole, TODOMask, textureIm, iPatchCenter, jPatchCenter, iMatchCenter, jMatchCenter, patchL):
+	'''
+	:param imHole: The input image containing a hole to be filled.
+	:param TODOMask: A mask of the input image where a pixel value of 1 indicates pixel is blank.
+	:param textureIm: An image in which the texture is sampled from.
+	:param iPatchCenter: The center 'row' coordinate of the hole (patch needed to be filled.)
+	:param jPatchCenter:  The center "column" coordinate of the hole (patch needed to be filled.)
+	:param iMatchCenter:  The center 'row' coordinate of the matching template (taken directly from textureIm)
+	:param jMatchCenter: The center 'column' coordinate of the matching template (take directly from textureIm)
+	:param patchL: The half-length of the patch.
+	:return: The imHole image filled using the matching texture.
+	'''
 	patchSize = 2 * patchL + 1
+
 	for i in range(patchSize):
 		for j in range(patchSize):
 			# Copy the selected patch selectPatch into the image containing
@@ -41,15 +58,15 @@ def CopyPatch(imHole, TODOMask, textureIm, iPatchCenter, jPatchCenter, iMatchCen
 			#
 			# ADD YOUR CODE HERE
 			#
-			print("CopyPatch")
-			print(f"patch center ({iPatchCenter},{jPatchCenter}), match center: ({iMatchCenter},{jMatchCenter})")
 
 			# Check if pixel is blank in mask
-			if TODOMask[i,j] == 1:
-				pass
-				# TODO
-			pass
-		pass
+			if TODOMask[i, j] == 1:
+				# Get pixel value from textureIm, centered from the match.
+				x_offset, y_offset = i - patchL, j - patchL
+				pixel_value = textureIm[iMatchCenter + x_offset, jMatchCenter + y_offset]
+				# Copy pixel value, set from patch center.
+				imHole[iPatchCenter + x_offset, jPatchCenter + y_offset] = pixel_value
+
 	return imHole
 
 ##############################################################################
@@ -163,19 +180,19 @@ if showResults == True:
 	im1 = DrawBox(im1,jTextureMin,iTextureMin,jTextureMax,iTextureMax)
 	im1.show()
 	print ("Are you happy with this choice of fillRegion and textureIm?")
-	# Yes_or_No = False
-	# while not Yes_or_No:
-	# 	answer = "" #raw_input("Yes or No: ")
-	# 	if answer == "Yes" or answer == "No":
-	# 		Yes_or_No = True
-	# assert answer == "Yes", "You must be happy. Please try again."
+	Yes_or_No = False
+	while not Yes_or_No:
+		answer = input("Yes or No: ")
+		if answer == "Yes" or answer == "No":
+			Yes_or_No = True
+	assert answer == "Yes", "You must be happy. Please try again."
 
 #
 # Perform the hole filling
 #
 
 while (nFill > 0):
-	print("Number of pixels remaining = " , nFill)
+	print("Number of pixels remaining = ", nFill)
 
 	# Set TODORegion to pixels on the boundary of the current fillRegion
 	TODORegion = Find_Edge(fillRegion)
@@ -185,7 +202,7 @@ while (nFill > 0):
 	while(nTODO > 0):
 
 		# Pick a random pixel from the TODORegion
-		index = np.random.randint(0,nTODO)
+		index = np.random.randint(0, nTODO)
 		iPatchCenter = edge_pixels[0][index]
 		jPatchCenter = edge_pixels[1][index]
 
@@ -231,3 +248,4 @@ while (nFill > 0):
 if showResults == True:
 	Image.fromarray(imHole).convert('RGB').show()
 Image.fromarray(imHole).convert('RGB').save('results.jpg')
+

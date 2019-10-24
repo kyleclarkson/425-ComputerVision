@@ -97,7 +97,7 @@ print('Would you like to select the region to be filled (0) or the sample textur
 
 Zero_or_One = False
 while not Zero_or_One:
-    answer = raw_input("0 or 1: ")
+    answer = input("0 or 1: ")
     if answer == "0" or answer == "1":
             Zero_or_One = True
 
