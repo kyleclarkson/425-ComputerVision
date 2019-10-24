@@ -15,7 +15,7 @@ def ComputeSSD(TODOPatch, TODOMask, textureIm, patchL):
 	ssd_cols = tex_cols - 2 * patchL
 	SSD = np.zeros((ssd_rows, ssd_cols))
 
-	# Create a patch corresponding to the TODOMask with colour channels.
+	# Create a patch corresponding to the TODOMask with colour channels. (Vectorize over colour channels)
 	mask = np.zeros((TODOMask.shape[0], TODOMask.shape[1], 3))
 	todo_mask_patch = np.ma.array(TODOPatch, mask=mask, dtype=float)
 
@@ -30,9 +30,7 @@ def ComputeSSD(TODOPatch, TODOMask, textureIm, patchL):
 			# Get patch for values of r,c from texture image.
 			texture_patch = textureIm[r:r+patch_rows, c:c+patch_cols]
 
-			# Compute SSD for each channel
-			for channel in [0, 1, 2]:
-				SSD[r, c] += np.sum((texture_patch - todo_mask_patch)**2)
+			SSD[r, c] += np.sum((texture_patch - todo_mask_patch)**2)
 	return SSD
 
 
@@ -108,7 +106,7 @@ patchL = 8
 patchSize = 2*patchL+1
 
 # Standard deviation for random patch selection
-randomPatchSD = 3
+randomPatchSD = 5
 
 # Display results interactively
 showResults = True
@@ -216,8 +214,8 @@ while (nFill > 0):
 		ssdIm = ComputeSSD(TODOPatch, TODOMask, textureIm, patchL)
 
 		# Randomized selection of one of the best texture patches
-		ssdIm1 = np.sort(np.copy(ssdIm),axis=None)
-		ssdValue = ssdIm1[min(round(abs(random.gauss(0,randomPatchSD))),np.size(ssdIm1)-1)]
+		ssdIm1 = np.sort(np.copy(ssdIm), axis=None)
+		ssdValue = ssdIm1[min(round(abs(random.gauss(0, randomPatchSD))), np.size(ssdIm1)-1)]
 		ssdIndex = np.nonzero(ssdIm==ssdValue)
 		iSelectCenter = ssdIndex[0][0]
 		jSelectCenter = ssdIndex[1][0]
