@@ -26,8 +26,8 @@ def ReadKeys(image):
     keypoints = []
     descriptors = []
     first = True
-    with open(image+'.key','rb') as f:
-        reader = csv.reader(f, delimiter=' ', quoting=csv.QUOTE_NONNUMERIC,skipinitialspace = True)
+    with open(image+'.key', 'r') as f:
+        reader = csv.reader(f, delimiter=' ', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True)
         descriptor = []
         for row in reader:
             if len(row) == 2:
@@ -48,7 +48,7 @@ def ReadKeys(image):
                 descriptors.append(descriptor)
                 descriptor = []
     assert len(keypoints) == count, "Incorrect total number of keypoints read."
-    print "Number of keypoints read:", int(count)
+    print("Number of keypoints read:", int(count))
     return [im,keypoints,descriptors]
 
 def AppendImages(im1, im2):
@@ -81,7 +81,7 @@ def DisplayMatches(im1, im2, matched_pairs):
     im3.show()
     return im3
 
-def match(image1,image2):
+def match(image1, image2):
     """Input two images and their associated SIFT keypoints.
     Display lines connecting the first 5 keypoints from each image.
     Note: These 5 are not correct matches, just randomly chosen points.
@@ -94,20 +94,40 @@ def match(image1,image2):
     """
     im1, keypoints1, descriptors1 = ReadKeys(image1)
     im2, keypoints2, descriptors2 = ReadKeys(image2)
-    #
-    # REPLACE THIS CODE WITH YOUR SOLUTION (ASSIGNMENT 5, QUESTION 3)
-    #
-    #Generate five random matches (for testing purposes)
+
+    """
+    - Each row of descriptor corresponds to vector of feature
+    - These vectors are already normalized to unit length.
+    """
+    # === New code ===
     matched_pairs = []
-    num = 5
-    for i in range(num):
-        matched_pairs.append([keypoints1[i],keypoints2[i]])
-    #
-    # END OF SECTION OF CODE TO REPLACE
-    #
+
+    # Ratio smallest 2 angles threshold.
+    THRESHOLD = .75
+    print(f"Threshold: {THRESHOLD}")
+
+    # For each vector in descriptors1, determine angle for each vector in descriptors2
+    for index, descriptors_1 in enumerate(descriptors1):
+        angles = []
+        for descriptors_2 in descriptors2:
+            # Compute angle for each vector, add to list
+            angles.append(math.acos(np.dot(descriptors_1.T, descriptors_2)))
+
+
+        # Get smallest and second smallest angles
+        min_angle, second_min_angle = sorted(angles)[0:2]
+        # If ratio is less than threshold, match keypoints.
+        if min_angle / second_min_angle < THRESHOLD:
+            # Add matched keypoints to list of matched pairs.
+            keypoint_1 = keypoints1[index]
+            keypoint_2 = keypoints2[angles.index(min_angle)]
+            matched_pairs.append([keypoint_1, keypoint_2])
+
+    print(f"Matches found: {len(matched_pairs)}")
     im3 = DisplayMatches(im1, im2, matched_pairs)
+    im3.save("output.bmp")
     return im3
 
 #Test run...
-match('scene','basmati')
+match('scene','book')
 
