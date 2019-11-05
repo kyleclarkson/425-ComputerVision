@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import csv
 import math
+import random as rd
 
 def ReadKeys(image):
     """Input an image and its associated SIFT keypoints.
@@ -124,10 +125,56 @@ def match(image1, image2):
             matched_pairs.append([keypoint_1, keypoint_2])
 
     print(f"Matches found: {len(matched_pairs)}")
-    im3 = DisplayMatches(im1, im2, matched_pairs)
+
+    # == Q 4 ==
+
+    SCALE_THRESHOLD = 0.7
+    ANGLE_THRESHOLD = 30 * math.pi / 180 # Convert degrees to radians
+    NUM_OF_SAMPLES = 10
+
+    largest_consistent_set = []
+
+    # Sample pair of matched keypoints
+    for [keypoint_m_1, keypoint_m_2] in rd.sample(matched_pairs, NUM_OF_SAMPLES):
+        '''
+            == 4 entries per keypoint: ==
+            (row, column, scale, orientation)
+        '''
+        # Determine differences in scale and orientation
+        d_scale_m_1 = keypoint_m_1[2] - keypoint_m_2[2]
+        d_angle_m_1 = keypoint_m_1[3] - keypoint_m_2[3] % 2 * math.pi
+        consistent_matches = []
+
+        # Check differences against other matches to  determine if consistent.
+        for [keypoint_1_m_2, keypoint_2_m_2] in matched_pairs:
+            d_scale_m_2 = keypoint_1_m_2[2] - keypoint_2_m_2[2]
+            d_angle_m_2 = keypoint_1_m_2[3] - keypoint_2_m_2[3] % 2 * math.pi
+
+            # Compute change in scale and difference of angles.
+            dd_scale = abs((d_scale_m_2 / d_scale_m_1) - 1)
+            # Ensure difference is min of two possible angles (i.e. at most pi)
+            dd_angle = min((d_angle_m_1 - d_scale_m_2) % 2*math.pi, (d_angle_m_2 - d_scale_m_1) % 2*math.pi)
+
+            # Mark matches as consistent if both dd values are less than thresholds
+            if dd_scale <= SCALE_THRESHOLD and dd_angle <= ANGLE_THRESHOLD:
+                consistent_matches.append([keypoint_1_m_2, keypoint_2_m_2])
+
+        print(f"Consistent matches: {len(consistent_matches)}")
+
+        # Kep largest consistent set
+        if len(largest_consistent_set) < len(consistent_matches):
+            largest_consistent_set = consistent_matches
+
+    print(f"Largest consistent set size: {len(largest_consistent_set)}")
+
+
+    # im3 = DisplayMatches(im1, im2, matched_pairs)
+    im3 = DisplayMatches(im1, im2, largest_consistent_set)
     im3.save("output.bmp")
+
     return im3
 
 #Test run...
-match('scene','book')
+# match('scene', 'book')
+match('library', 'library2')
 
