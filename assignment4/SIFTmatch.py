@@ -124,12 +124,12 @@ def match(image1, image2):
             keypoint_2 = keypoints2[angles.index(min_angle)]
             matched_pairs.append([keypoint_1, keypoint_2])
 
-    print(f"Matches found: {len(matched_pairs)}")
+    print(f"Matches found Q3: {len(matched_pairs)}")
 
     # == Q 4 ==
 
     SCALE_THRESHOLD = 0.7
-    ANGLE_THRESHOLD = 30 * math.pi / 180 # Convert degrees to radians
+    ANGLE_THRESHOLD = 15 * math.pi / 180 # Convert degrees to radians
     NUM_OF_SAMPLES = 10
 
     largest_consistent_set = []
@@ -159,16 +159,16 @@ def match(image1, image2):
             if dd_scale <= SCALE_THRESHOLD and dd_angle <= ANGLE_THRESHOLD:
                 consistent_matches.append([keypoint_1_m_2, keypoint_2_m_2])
 
-        print(f"Consistent matches: {len(consistent_matches)}")
+        # print(f"Consistent matches: {len(consistent_matches)}")
 
         # Kep largest consistent set
         if len(largest_consistent_set) < len(consistent_matches):
             largest_consistent_set = consistent_matches
 
-    print(f"Largest consistent set size: {len(largest_consistent_set)}")
+    print(f"Largest consistent set size Q4: {len(largest_consistent_set)}")
 
 
-    # im3 = DisplayMatches(im1, im2, matched_pairs)
+    im3 = DisplayMatches(im1, im2, matched_pairs)
     im3 = DisplayMatches(im1, im2, largest_consistent_set)
     im3.save("output.bmp")
 
