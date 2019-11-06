@@ -104,7 +104,7 @@ def match(image1, image2):
     matched_pairs = []
 
     # Ratio smallest 2 angles threshold.
-    THRESHOLD = .75
+    THRESHOLD = 0.8
     print(f"Threshold: {THRESHOLD}")
 
     # For each vector in descriptors1, determine angle for each vector in descriptors2
@@ -126,12 +126,17 @@ def match(image1, image2):
 
     print(f"Matches found Q3: {len(matched_pairs)}")
 
+    im3 = DisplayMatches(im1, im2, matched_pairs)
+    im3.save("output.bmp")
+
     # == Q 4 ==
 
-    SCALE_THRESHOLD = 0.7
-    ANGLE_THRESHOLD = 15 * math.pi / 180 # Convert degrees to radians
+    SCALE_THRESHOLD = 0.8
+    ANGLE_DEGREES = 60
+    ANGLE_THRESHOLD = ANGLE_DEGREES * math.pi / 180 # Convert degrees to radians
     NUM_OF_SAMPLES = 10
 
+    print(f"Scale Threshold: {SCALE_THRESHOLD} Angle threshold (deg): {ANGLE_DEGREES}")
     largest_consistent_set = []
 
     # Sample pair of matched keypoints
@@ -161,16 +166,14 @@ def match(image1, image2):
 
         # print(f"Consistent matches: {len(consistent_matches)}")
 
-        # Kep largest consistent set
+        # Keep largest consistent set
         if len(largest_consistent_set) < len(consistent_matches):
             largest_consistent_set = consistent_matches
 
     print(f"Largest consistent set size Q4: {len(largest_consistent_set)}")
 
-
-    im3 = DisplayMatches(im1, im2, matched_pairs)
     im3 = DisplayMatches(im1, im2, largest_consistent_set)
-    im3.save("output.bmp")
+    im3.save(f"output_ransac.bmp")
 
     return im3
 
