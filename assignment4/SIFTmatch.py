@@ -132,7 +132,7 @@ def match(image1, image2):
     # == Q 4 ==
 
     SCALE_THRESHOLD = 0.8
-    ANGLE_DEGREES = 60
+    ANGLE_DEGREES = 90
     ANGLE_THRESHOLD = ANGLE_DEGREES * math.pi / 180 # Convert degrees to radians
     NUM_OF_SAMPLES = 10
 
