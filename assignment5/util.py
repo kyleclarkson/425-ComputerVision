@@ -27,18 +27,22 @@ def build_vocabulary(image_paths, vocab_size):
     # keypoints = np.zeros((n_image * n_each, 2))
     descriptors = np.zeros((n_image * n_each, 128))
 
+    # Iterate over each sample image.
     for i, path in enumerate(image_paths):
         # Load features from each image
-        features = np.loadtxt(path, delimiter=',',dtype=float)
+        features = np.loadtxt(path, delimiter=',', dtype=float)
         sift_keypoints = features[:, :2]
         sift_descriptors = features[:, 2:]
 
-        # TODO: Randomly sample n_each descriptors from sift_descriptor and store them into descriptors
+        # : Randomly sample n_each descriptors from sift_descriptor and store them into descriptors
+        # Generate a set of random samples of feature-descriptors and append to list 'descriptors'.
+        sample_descriptors = np.random.choice(a=sift_descriptors.shape[0], replace=False)
+        descriptors = np.vstack((descriptors, features[sample_descriptors, :]))
 
-    # TODO: pefrom k-means clustering to cluster sampled sift descriptors into vocab_size regions.
+    # : prefrom k-means clustering to cluster sampled sift descriptors into vocab_size regions.
     # You can use KMeans from sci-kit learn.
     # Reference: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
-    
+    kmeans = KMeans(n_clusters=vocab_size, n_jobs=8).fit(descriptors)
     return kmeans
     
 def get_bags_of_sifts(image_paths, kmeans):
@@ -58,15 +62,20 @@ def get_bags_of_sifts(image_paths, kmeans):
 
     image_feats = np.zeros((n_image, vocab_size))
 
+    # Iterate through each image
     for i, path in enumerate(image_paths):
         # Load features from each image
-        features = np.loadtxt(path, delimiter=',',dtype=float)
+        features = np.loadtxt(path, delimiter=',', dtype=float)
 
-        # TODO: Assign each feature to the closest cluster center
+        # : Assign each feature to the closest cluster center
         # Again, each feature consists of the (x, y) location and the 128-dimensional sift descriptor
         # You can access the sift descriptors part by features[:, 2:]
+        closest = kmeans.predict(features[:, 2:])
 
-        # TODO: Build a histogram normalized by the number of descriptors
+        # : Build a histogram normalized by the number of descriptors
+        # The number of descriptors present in this image
+        num_of_descriptors = features.shape[0]
+        image_feats[i] = closest / num_of_descriptors
 
     return image_feats
 
@@ -106,4 +115,4 @@ def load(ds_path):
 
 if __name__ == "__main__":
     paths, labels = load("sift/train")
-    #build_vocabulary(paths, 10)
+    build_vocabulary(paths, 10)
