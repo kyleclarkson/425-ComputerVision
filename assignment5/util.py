@@ -2,6 +2,8 @@ import numpy as np
 import os
 import glob
 from sklearn.cluster import KMeans
+import time
+import pickle
 
 def build_vocabulary(image_paths, vocab_size):
     """ Sample SIFT descriptors, cluster them using k-means, and return the fitted k-means model.
@@ -37,12 +39,17 @@ def build_vocabulary(image_paths, vocab_size):
         # : Randomly sample n_each descriptors from sift_descriptor and store them into descriptors
         # Generate a set of random samples of feature-descriptors and append to list 'descriptors'.
         sample_descriptors = np.random.choice(a=sift_descriptors.shape[0], replace=False)
-        descriptors = np.vstack((descriptors, features[sample_descriptors, :]))
+        descriptors = np.vstack((descriptors, sift_descriptors[sample_descriptors, :]))
 
     # : prefrom k-means clustering to cluster sampled sift descriptors into vocab_size regions.
     # You can use KMeans from sci-kit learn.
     # Reference: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+    print(f"Fitting kmeans")
+    stime = time.clock()
     kmeans = KMeans(n_clusters=vocab_size, n_jobs=8).fit(descriptors)
+    print(f"Finished fitting kmeans. Time: {time.clock() - stime} Saving model:")
+    with open('kmeans.pkl', 'wb') as file:
+        pickle.dump(kmeans, file)
     return kmeans
     
 def get_bags_of_sifts(image_paths, kmeans):
@@ -75,7 +82,7 @@ def get_bags_of_sifts(image_paths, kmeans):
         # : Build a histogram normalized by the number of descriptors
         # The number of descriptors present in this image
         num_of_descriptors = features.shape[0]
-        image_feats[i] = closest / num_of_descriptors
+        image_feats[i] += 1 / num_of_descriptors
 
     return image_feats
 

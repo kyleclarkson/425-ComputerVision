@@ -28,8 +28,8 @@ test_image_paths, test_labels = load("sift/test")
 
         
 print('Extracting SIFT features\n')
-#TODO: You code build_vocabulary function in util.py
-kmeans = build_vocabulary(train_image_paths, vocab_size=200)
+#: You code build_vocabulary function in util.py
+kmeans = build_vocabulary(train_image_paths, vocab_size=10)
 
 #TODO: You code get_bags_of_sifts function in util.py 
 train_image_feats = get_bags_of_sifts(train_image_paths, kmeans)
