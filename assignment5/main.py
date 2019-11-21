@@ -1,9 +1,9 @@
-#Starter code prepared by Borna Ghotbi, Polina Zablotskaia, and Ariel Shann for Computer Vision
-#based on a MATLAB code by James Hays and Sam Birch 
-
 import numpy as np
 from util import load, build_vocabulary, get_bags_of_sifts
 from classifiers import nearest_neighbor_classify, svm_classify
+
+#Starter code prepared by Borna Ghotbi, Polina Zablotskaia, and Ariel Shann for Computer Vision
+#based on a MATLAB code by James Hays and Sam Birch
 
 #For this assignment, you will need to report performance for sift features on two different classifiers:
 # 1) Bag of sift features and nearest neighbor classifier
@@ -31,10 +31,10 @@ print('Extracting SIFT features\n')
 #: You code build_vocabulary function in util.py
 kmeans = build_vocabulary(train_image_paths, vocab_size=10)
 
-#TODO: You code get_bags_of_sifts function in util.py 
-train_image_feats = get_bags_of_sifts(train_image_paths, kmeans)
-test_image_feats = get_bags_of_sifts(test_image_paths, kmeans)
-        
+#: You code get_bags_of_sifts function in util.py
+train_image_feats = get_bags_of_sifts(train_image_paths, kmeans, 'train')
+test_image_feats = get_bags_of_sifts(test_image_paths, kmeans, 'test')
+
 #If you want to avoid recomputing the features while debugging the
 #classifiers, you can either 'save' and 'load' the extracted features
 #to/from a file.

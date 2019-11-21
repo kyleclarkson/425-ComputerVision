@@ -44,21 +44,24 @@ def build_vocabulary(image_paths, vocab_size):
     # : prefrom k-means clustering to cluster sampled sift descriptors into vocab_size regions.
     # You can use KMeans from sci-kit learn.
     # Reference: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
-    print(f"Fitting kmeans")
+
+    # == Save model ==
+    print(f"Fitting kmeans vocab")
     stime = time.clock()
     kmeans = KMeans(n_clusters=vocab_size, n_jobs=8).fit(descriptors)
     print(f"Finished fitting kmeans. Time: {time.clock() - stime} Saving model:")
-    with open('kmeans.pkl', 'wb') as file:
+    with open(f'models/kmeans-vocab.pkl', 'wb',) as file:
         pickle.dump(kmeans, file)
     return kmeans
     
-def get_bags_of_sifts(image_paths, kmeans):
+def get_bags_of_sifts(image_paths, kmeans, mode):
     """ Represent each image as bags of SIFT features histogram.
 
     Parameters
     ----------
     image_paths: an (n_image, 1) array of image paths.
     kmeans: k-means clustering model with vocab_size centroids.
+    mode: For saving either training or test features.
 
     Returns
     -------
@@ -83,6 +86,11 @@ def get_bags_of_sifts(image_paths, kmeans):
         # The number of descriptors present in this image
         num_of_descriptors = features.shape[0]
         image_feats[i] += 1 / num_of_descriptors
+
+    # == Save model ==
+    save_path = f"models/{mode}-features.pkl"
+    with open(save_path, 'wb', ) as file:
+        pickle.dump(image_feats, file)
 
     return image_feats
 
