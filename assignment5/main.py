@@ -1,6 +1,7 @@
 import numpy as np
 from util import load, build_vocabulary, get_bags_of_sifts
 from classifiers import nearest_neighbor_classify, svm_classify
+import pickle
 
 #Starter code prepared by Borna Ghotbi, Polina Zablotskaia, and Ariel Shann for Computer Vision
 #based on a MATLAB code by James Hays and Sam Birch
@@ -28,16 +29,27 @@ test_image_paths, test_labels = load("sift/test")
 
         
 print('Extracting SIFT features\n')
-#: You code build_vocabulary function in util.py
-kmeans = build_vocabulary(train_image_paths, vocab_size=10)
-
-#: You code get_bags_of_sifts function in util.py
-train_image_feats = get_bags_of_sifts(train_image_paths, kmeans, 'train')
-test_image_feats = get_bags_of_sifts(test_image_paths, kmeans, 'test')
-
 #If you want to avoid recomputing the features while debugging the
 #classifiers, you can either 'save' and 'load' the extracted features
 #to/from a file.
+
+# Use precomputed models
+is_using_saved = True
+
+if(not is_using_saved):
+    #: You code build_vocabulary function in util.py
+    kmeans = build_vocabulary(train_image_paths, vocab_size=500)
+
+    #: You code get_bags_of_sifts function in util.py
+    train_image_feats = get_bags_of_sifts(train_image_paths, kmeans, 'train')
+    test_image_feats = get_bags_of_sifts(test_image_paths, kmeans, 'test')
+
+else:
+    kmeans = pickle.load(open("models/kmeans-vocab.pkl", "rb"))
+
+    train_image_feats = pickle.load(open("models/train-features.pkl", "rb"))
+    test_image_feats = pickle.load(open("models/test-features.pkl", "rb"))
+
 
 ''' Step 2: Classify each test image by training and using the appropriate classifier
  Each function to classify test features will return an N x l cell array,
@@ -45,13 +57,14 @@ test_image_feats = get_bags_of_sifts(test_image_paths, kmeans, 'test')
  the predicted one-hot vector for each test image. See the starter code for each function
  for more details. '''
 
+# == KNN prediction ==
 print('Using nearest neighbor classifier to predict test set categories\n')
-#TODO: YOU CODE nearest_neighbor_classify function from classifers.py
+#: YOU CODE nearest_neighbor_classify function from classifers.py
 pred_labels_knn = nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
-  
 
+# == SVM prediction ==
 print('Using support vector machine to predict test set categories\n')
-#TODO: YOU CODE svm_classify function from classifers.py
+#: YOU CODE svm_classify function from classifers.py
 pred_labels_svm = svm_classify(train_image_feats, train_labels, test_image_feats)
 
 
@@ -65,6 +78,14 @@ print('---Evaluation---\n')
 # 2) Build a Confusion matrix and visualize it. 
 #   You will need to convert the one-hot format labels back
 #   to their category name format.
+
+# == Compute classification success rate. ==
+knn_success = np.sum(test_labels == pred_labels_knn) / len(test_labels)
+svm_success = np.sum(test_labels == pred_labels_svm) / len(test_labels)
+
+print(f"KNN success rate: {knn_success}")
+print(f"SVM success rate: {svm_success}")
+
 
 
 # Interpreting your performance with 100 training examples per category:
