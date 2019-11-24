@@ -19,6 +19,8 @@ def build_vocabulary(image_paths, vocab_size):
     -------
     kmeans: the fitted k-means clustering model.
     """
+
+    # np.random.seed(123)
     n_image = len(image_paths)
 
     # Since want to sample tens of thousands of SIFT descriptors from different images, we
@@ -49,8 +51,8 @@ def build_vocabulary(image_paths, vocab_size):
     print(f"Fitting kmeans vocab")
     stime = time.clock()
     kmeans = KMeans(n_clusters=vocab_size, n_jobs=8).fit(descriptors)
-    print(f"Finished fitting kmeans. Time: {time.clock() - stime} Saving model:")
-    with open(f'models/kmeans-vocab.pkl', 'wb',) as file:
+    print(f"Finished fitting kmeans vocab. Time: {time.clock() - stime} Saving model:")
+    with open(f'models/kmeans-vocab-{vocab_size}.pkl', 'wb',) as file:
         pickle.dump(kmeans, file)
     return kmeans
     
@@ -80,15 +82,18 @@ def get_bags_of_sifts(image_paths, kmeans, mode):
         # : Assign each feature to the closest cluster center
         # Again, each feature consists of the (x, y) location and the 128-dimensional sift descriptor
         # You can access the sift descriptors part by features[:, 2:]
+        # Get matched cluster per each feature
         closest = kmeans.predict(features[:, 2:])
 
         # : Build a histogram normalized by the number of descriptors
-        # The number of descriptors present in this image
+        # Increment the number of features classified per cluster, normalized by number of descriptors.
         num_of_descriptors = features.shape[0]
-        image_feats[i] += 1 / num_of_descriptors
+        for cluster in closest:
+            image_feats[i][cluster] += 1 / num_of_descriptors
 
     # == Save model ==
-    save_path = f"models/{mode}-features.pkl"
+    print(f"Finished generating BoW from SIFT features. Saving: ")
+    save_path = f"models/{mode}-features-{vocab_size}.pkl"
     with open(save_path, 'wb', ) as file:
         pickle.dump(image_feats, file)
 
@@ -130,4 +135,4 @@ def load(ds_path):
 
 if __name__ == "__main__":
     paths, labels = load("sift/train")
-    build_vocabulary(paths, 10)
+    # build_vocabulary(paths, VOCAB_SIZE)

@@ -34,21 +34,23 @@ print('Extracting SIFT features\n')
 #to/from a file.
 
 # Use precomputed models
-is_using_saved = True
+is_using_saved = not True
+
+VOCAB_SIZE = 1000 # k in KNN for BoW of SIFT images
+K_CLASSIFIER = 300 # k in KNN for classifier.
+C_PEN_CLASSIFIER = 2 # SVM penality parameter
 
 if(not is_using_saved):
-    #: You code build_vocabulary function in util.py
-    kmeans = build_vocabulary(train_image_paths, vocab_size=500)
-
-    #: You code get_bags_of_sifts function in util.py
+    print("Creating new BoW representation.")
+    kmeans = build_vocabulary(train_image_paths, vocab_size=VOCAB_SIZE)
     train_image_feats = get_bags_of_sifts(train_image_paths, kmeans, 'train')
     test_image_feats = get_bags_of_sifts(test_image_paths, kmeans, 'test')
 
 else:
-    kmeans = pickle.load(open("models/kmeans-vocab.pkl", "rb"))
-
-    train_image_feats = pickle.load(open("models/train-features.pkl", "rb"))
-    test_image_feats = pickle.load(open("models/test-features.pkl", "rb"))
+    print("Using saved BoW representation.")
+    kmeans = pickle.load(open(f"models/kmeans-vocab-{VOCAB_SIZE}.pkl", "rb"))
+    train_image_feats = pickle.load(open(f"models/train-features-{VOCAB_SIZE}.pkl", "rb"))
+    test_image_feats = pickle.load(open(f"models/test-features-{VOCAB_SIZE}.pkl", "rb"))
 
 
 ''' Step 2: Classify each test image by training and using the appropriate classifier
@@ -60,12 +62,12 @@ else:
 # == KNN prediction ==
 print('Using nearest neighbor classifier to predict test set categories\n')
 #: YOU CODE nearest_neighbor_classify function from classifers.py
-pred_labels_knn = nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
+pred_labels_knn = nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats, K_CLASSIFIER)
 
 # == SVM prediction ==
 print('Using support vector machine to predict test set categories\n')
 #: YOU CODE svm_classify function from classifers.py
-pred_labels_svm = svm_classify(train_image_feats, train_labels, test_image_feats)
+pred_labels_svm = svm_classify(train_image_feats, train_labels, test_image_feats, C_PEN_CLASSIFIER)
 
 
 

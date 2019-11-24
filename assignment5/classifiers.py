@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import multiclass, svm
 
 
-def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
+def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats, k):
 
     '''
     Parameters
@@ -29,7 +29,6 @@ def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
     '''
 
     # Number of neighbours to use.
-    k = 10
     nn = KNeighborsClassifier(n_neighbors=k, n_jobs=8)
     training_error = nn.fit(train_image_feats, train_labels).score(train_image_feats, train_labels)
     print(f"KNN training error: {training_error}")
@@ -50,7 +49,7 @@ and the most confident SVM will "win". Confidence, or distance from the
 margin, is W*X + B where '*' is the inner product or dot product and W and
 B are the learned hyperplane parameters. '''
 
-def svm_classify(train_image_feats, train_labels, test_image_feats):
+def svm_classify(train_image_feats, train_labels, test_image_feats, c):
 
     '''
     Parameters
@@ -75,7 +74,9 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
 
     clf = svm.LinearSVC(
         penalty='l2',
-        C=4)
+        dual=False,
+        C=c
+        )
     training_error = clf.fit(train_image_feats, train_labels).score(train_image_feats, train_labels)
     print(f"SVM training error: {training_error}")
     predicted_labels = clf.predict(test_image_feats)
