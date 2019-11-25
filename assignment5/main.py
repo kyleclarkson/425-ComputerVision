@@ -1,5 +1,5 @@
 import numpy as np
-from util import load, build_vocabulary, get_bags_of_sifts
+from util import load, build_vocabulary, get_bags_of_sifts, generate_histogram
 from classifiers import nearest_neighbor_classify, svm_classify
 import pickle
 
@@ -15,6 +15,8 @@ import pickle
 
 #Sample images from the training/testing dataset. 
 #You can limit number of samples by using the n_sample parameter.
+
+
 
 print('Getting paths and labels for all train and test data\n')
 train_image_paths, train_labels = load("sift/train")
@@ -33,12 +35,16 @@ print('Extracting SIFT features\n')
 #classifiers, you can either 'save' and 'load' the extracted features
 #to/from a file.
 
+# ==============
+#   Params
+# ==============
+
 # Use precomputed models
 is_using_saved = not True
 
-VOCAB_SIZE = 1000 # k in KNN for BoW of SIFT images
+VOCAB_SIZE = 400 # k in KNN for BoW of SIFT images
 K_CLASSIFIER = 300 # k in KNN for classifier.
-C_PEN_CLASSIFIER = 2 # SVM penality parameter
+C_PEN_CLASSIFIER = 8 # SVM penality parameter
 
 if(not is_using_saved):
     print("Creating new BoW representation.")
@@ -81,10 +87,14 @@ print('---Evaluation---\n')
 #   You will need to convert the one-hot format labels back
 #   to their category name format.
 
+# Generate average histograms per each class.
+# generate_histogram(train_image_feats, train_labels)
+
+
 # == Compute classification success rate. ==
 knn_success = np.sum(test_labels == pred_labels_knn) / len(test_labels)
 svm_success = np.sum(test_labels == pred_labels_svm) / len(test_labels)
-
+print(f"Model hyperparams: k={K_CLASSIFIER}, C={C_PEN_CLASSIFIER}")
 print(f"KNN success rate: {knn_success}")
 print(f"SVM success rate: {svm_success}")
 

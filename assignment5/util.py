@@ -4,7 +4,9 @@ import glob
 from sklearn.cluster import KMeans
 import time
 import pickle
+import matplotlib.pyplot as plt
 
+np.random.seed(123)
 def build_vocabulary(image_paths, vocab_size):
     """ Sample SIFT descriptors, cluster them using k-means, and return the fitted k-means model.
     NOTE: We don't necessarily need to use the entire training dataset. You can use the function
@@ -20,7 +22,6 @@ def build_vocabulary(image_paths, vocab_size):
     kmeans: the fitted k-means clustering model.
     """
 
-    # np.random.seed(123)
     n_image = len(image_paths)
 
     # Since want to sample tens of thousands of SIFT descriptors from different images, we
@@ -121,9 +122,13 @@ def load(ds_path):
     classes = glob.glob(os.path.join(ds_path, "*"))
     labels = np.zeros(n_files)
 
+    folder_name = ""
     for i, path in enumerate(image_paths):
         folder, fn = os.path.split(path)
-        labels[i] = np.argwhere(np.core.defchararray.equal(classes, folder))[0,0]
+        labels[i] = np.argwhere(np.core.defchararray.equal(classes, folder))[0, 0]
+        # if folder_name != folder:
+        #     folder_name = folder
+        #     print(f"Folder: {folder_name}, index: = {labels[i]}")
 
     # Randomize the order
     idx = np.random.choice(n_files, size=n_files, replace=False)
@@ -131,6 +136,46 @@ def load(ds_path):
     labels = labels[idx]
 
     return image_paths, labels
+
+def generate_histogram(image_feats,
+                       labels):
+    print(f"Generating histograms:")
+    # Mapping from class label [0,14] to class name.
+    class_dict = {0: "Bedroom",
+                  1: "Coast",
+                  2: "Forest",
+                  3: "Highway",
+                  4: "Industrial",
+                  5: "InsideCity",
+                  6: "Kitchen",
+                  7: "LivingRoom",
+                  8: "Mountain",
+                  9: "Office",
+                  10: "OpenCountry",
+                  11: "Store",
+                  12: "Street",
+                  13: "Suburb",
+                  14: "TallBuilding"}
+
+    # A dictonary of histograms with K/V pairs:
+    # key: class name (above)
+    # value: pair (vector with length corresponding to number of features, total count of features found)
+    histograms = {}
+    number_of_feats = image_feats.shape[1]
+    # Increment histograms per class.
+    for idx, label in enumerate(labels):
+        class_name = class_dict.get(label)
+        class_histogram, count = histograms.get(class_name, (np.zeros((1, number_of_feats)), 0))
+        # Update histogram
+        histograms[class_name] = (np.add(class_histogram, image_feats[idx]), count+1)
+
+    # Compute average histogram per class and display.
+    for class_name, (class_histogram, count) in histograms.items():
+        plt.bar(np.arange(number_of_feats), np.divide(class_histogram, count)[0])
+        plt.title(f"Histogram -{class_name}")
+        plt.xlabel("Number of features in BoW Representation")
+        plt.savefig(f"histograms/{class_name}.jpg")
+        plt.close()
 
 
 if __name__ == "__main__":
