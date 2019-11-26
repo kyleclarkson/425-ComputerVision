@@ -2,6 +2,7 @@ import numpy as np
 import os
 import glob
 from sklearn.cluster import KMeans
+from sklearn.metrics import confusion_matrix
 import time
 import pickle
 import matplotlib.pyplot as plt
@@ -177,6 +178,49 @@ def generate_histogram(image_feats,
         plt.savefig(f"histograms/{class_name}.jpg")
         plt.close()
 
+def generate_confusion_matrix(pred_labels, true_labels, title, vocab_size):
+
+    # Mapping from class label [0,14] to class name.
+    class_dict = {0: "Bedroom",
+                  1: "Coast",
+                  2: "Forest",
+                  3: "Highway",
+                  4: "Industrial",
+                  5: "InsideCity",
+                  6: "Kitchen",
+                  7: "LivingRoom",
+                  8: "Mountain",
+                  9: "Office",
+                  10: "OpenCountry",
+                  11: "Store",
+                  12: "Street",
+                  13: "Suburb",
+                  14: "TallBuilding"}
+    # Generate normalized confusion matrix.
+    class_names = class_dict.values()
+    cm = confusion_matrix(true_labels, pred_labels)
+    cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+    # Show plot with appropriate labels.
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
+    ax.figure.colorbar(im, ax=ax)
+    ax.set(
+        title=title,
+        xticks=np.arange(cm.shape[1]),
+        yticks=np.arange(cm.shape[0]),
+        xticklabels=class_names,
+        yticklabels=class_names,
+        xlabel="Predicted label",
+        ylabel="True label",
+    )
+
+    # Rotate x label ticks for viewing.
+    plt.setp(ax.get_xticklabels(), rotation=55, ha="right", rotation_mode="anchor")
+    # plt.show()
+
+    # Save image
+    plt.savefig(f"confusion-matrices/{title}.jpg")
 
 if __name__ == "__main__":
     paths, labels = load("sift/train")

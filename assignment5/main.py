@@ -1,5 +1,5 @@
 import numpy as np
-from util import load, build_vocabulary, get_bags_of_sifts, generate_histogram
+from util import load, build_vocabulary, get_bags_of_sifts, generate_histogram, generate_confusion_matrix
 from classifiers import nearest_neighbor_classify, svm_classify
 import pickle
 
@@ -40,9 +40,9 @@ print('Extracting SIFT features\n')
 # ==============
 
 # Use precomputed models
-is_using_saved = not True
+is_using_saved = True
 
-VOCAB_SIZE = 400 # k in KNN for BoW of SIFT images
+VOCAB_SIZE = 1000 # k in KNN for BoW of SIFT images
 K_CLASSIFIER = 300 # k in KNN for classifier.
 C_PEN_CLASSIFIER = 8 # SVM penality parameter
 
@@ -90,13 +90,17 @@ print('---Evaluation---\n')
 # Generate average histograms per each class.
 # generate_histogram(train_image_feats, train_labels)
 
-
 # == Compute classification success rate. ==
 knn_success = np.sum(test_labels == pred_labels_knn) / len(test_labels)
 svm_success = np.sum(test_labels == pred_labels_svm) / len(test_labels)
 print(f"Model hyperparams: k={K_CLASSIFIER}, C={C_PEN_CLASSIFIER}")
 print(f"KNN success rate: {knn_success}")
 print(f"SVM success rate: {svm_success}")
+
+generate_confusion_matrix(pred_labels_knn, test_labels, title=f"KNN Confusion Matrix - {VOCAB_SIZE} Vocab size",
+                          vocab_size=VOCAB_SIZE)
+generate_confusion_matrix(pred_labels_svm, test_labels, title=f"SVM Confusion Matrix - {VOCAB_SIZE} Vocab size",
+                          vocab_size=VOCAB_SIZE)
 
 
 
