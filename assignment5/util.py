@@ -45,7 +45,7 @@ def build_vocabulary(image_paths, vocab_size):
         sample_descriptors = np.random.choice(a=sift_descriptors.shape[0], replace=False)
         descriptors = np.vstack((descriptors, sift_descriptors[sample_descriptors, :]))
 
-    # : prefrom k-means clustering to cluster sampled sift descriptors into vocab_size regions.
+    # : preform k-means clustering to cluster sampled sift descriptors into vocab_size regions.
     # You can use KMeans from sci-kit learn.
     # Reference: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 
@@ -139,7 +139,8 @@ def load(ds_path):
     return image_paths, labels
 
 def generate_histogram(image_feats,
-                       labels):
+                       labels,
+                       vocab_size):
     print(f"Generating histograms:")
     # Mapping from class label [0,14] to class name.
     class_dict = {0: "Bedroom",
@@ -173,7 +174,7 @@ def generate_histogram(image_feats,
     # Compute average histogram per class and display.
     for class_name, (class_histogram, count) in histograms.items():
         plt.bar(np.arange(number_of_feats), np.divide(class_histogram, count)[0])
-        plt.title(f"Histogram -{class_name}")
+        plt.title(f"Histogram-{class_name}")
         plt.xlabel("Number of features in BoW Representation")
         plt.savefig(f"histograms/{class_name}.jpg")
         plt.close()
@@ -210,17 +211,20 @@ def generate_confusion_matrix(pred_labels, true_labels, title, vocab_size):
         xticks=np.arange(cm.shape[1]),
         yticks=np.arange(cm.shape[0]),
         xticklabels=class_names,
-        yticklabels=class_names,
-        xlabel="Predicted label",
-        ylabel="True label",
+        yticklabels=class_names
     )
 
     # Rotate x label ticks for viewing.
     plt.setp(ax.get_xticklabels(), rotation=55, ha="right", rotation_mode="anchor")
-    # plt.show()
 
+    plt.xlabel = "Predicted label"
+    plt.ylabel = "True label"
+    plt.tight_layout()
     # Save image
-    plt.savefig(f"confusion-matrices/{title}.jpg")
+    plt.show()
+    is_saving = True
+    if is_saving:
+        plt.savefig(f"confusion-matrices/{title}.jpg")
 
 if __name__ == "__main__":
     paths, labels = load("sift/train")

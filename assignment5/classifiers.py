@@ -31,7 +31,7 @@ def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats,
     # Number of neighbours to use.
     nn = KNeighborsClassifier(n_neighbors=k, n_jobs=8)
     training_error = nn.fit(train_image_feats, train_labels).score(train_image_feats, train_labels)
-    print(f"KNN training error: {training_error}")
+    print(f"KNN training error: {training_error:.4f}")
     predicted_labels = nn.predict(test_image_feats)
     return predicted_labels
 
@@ -78,7 +78,7 @@ def svm_classify(train_image_feats, train_labels, test_image_feats, c):
         C=c
         )
     training_error = clf.fit(train_image_feats, train_labels).score(train_image_feats, train_labels)
-    print(f"SVM training error: {training_error}")
+    print(f"SVM training error: {training_error:.4f}")
     predicted_labels = clf.predict(test_image_feats)
     return predicted_labels
 

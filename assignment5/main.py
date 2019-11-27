@@ -42,9 +42,9 @@ print('Extracting SIFT features\n')
 # Use precomputed models
 is_using_saved = True
 
-VOCAB_SIZE = 1000 # k in KNN for BoW of SIFT images
-K_CLASSIFIER = 300 # k in KNN for classifier.
-C_PEN_CLASSIFIER = 8 # SVM penality parameter
+VOCAB_SIZE = 800 # k in KNN for BoW of SIFT images
+K_CLASSIFIER = 10 # k in KNN for classifier.
+C_PEN_CLASSIFIER = 16 # SVM penality parameter
 
 if(not is_using_saved):
     print("Creating new BoW representation.")
@@ -80,7 +80,7 @@ pred_labels_svm = svm_classify(train_image_feats, train_labels, test_image_feats
 print('---Evaluation---\n')
 # Step 3: Build a confusion matrix and score the recognition system for 
 #         each of the classifiers.
-# TODO: In this step you will be doing evaluation. 
+# : In this step you will be doing evaluation.
 # 1) Calculate the total accuracy of your model by counting number
 #   of true positives and true negatives over all. 
 # 2) Build a Confusion matrix and visualize it. 
@@ -88,18 +88,22 @@ print('---Evaluation---\n')
 #   to their category name format.
 
 # Generate average histograms per each class.
-# generate_histogram(train_image_feats, train_labels)
+generate_histogram(train_image_feats, train_labels, VOCAB_SIZE)
 
 # == Compute classification success rate. ==
 knn_success = np.sum(test_labels == pred_labels_knn) / len(test_labels)
 svm_success = np.sum(test_labels == pred_labels_svm) / len(test_labels)
 print(f"Model hyperparams: k={K_CLASSIFIER}, C={C_PEN_CLASSIFIER}")
-print(f"KNN success rate: {knn_success}")
-print(f"SVM success rate: {svm_success}")
+print(f"KNN success rate: {knn_success:.4f}")
+print(f"SVM success rate: {svm_success:.4f}")
 
-generate_confusion_matrix(pred_labels_knn, test_labels, title=f"KNN Confusion Matrix - {VOCAB_SIZE} Vocab size",
+generate_confusion_matrix(pred_labels_knn,
+                          test_labels,
+                          title=f"KNN Confusion Matrix - Vocab={VOCAB_SIZE} K={K_CLASSIFIER}",
                           vocab_size=VOCAB_SIZE)
-generate_confusion_matrix(pred_labels_svm, test_labels, title=f"SVM Confusion Matrix - {VOCAB_SIZE} Vocab size",
+generate_confusion_matrix(pred_labels_svm,
+                          test_labels,
+                          title=f"SVM Confusion Matrix - Vocab={VOCAB_SIZE} C={C_PEN_CLASSIFIER}",
                           vocab_size=VOCAB_SIZE)
 
 
